@@ -1,11 +1,14 @@
 using Microsoft.EntityFrameworkCore;
 using NonnaSusy.DB.Data;
+using NonnaSusy.DB.Data.Entities;
+using NonnaSusy.Repositorio.Repositorio;
 using NonnaSusy.Server.Components;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddControllers();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddRazorComponents()
@@ -16,6 +19,10 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 
 builder.Services.AddDbContext<Context>(options =>
     options.UseSqlServer(connectionString));
+
+builder.Services.AddScoped<IRepositorio<Cliente>, Repositorio<Cliente>>();
+builder.Services.AddScoped<IRepositorio<Producto>, Repositorio<Producto>>();
+builder.Services.AddScoped<IPedidoRepositorio, PedidoRepositorio>();
 
 var app = builder.Build();
 
@@ -41,5 +48,7 @@ app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode()
     .AddInteractiveWebAssemblyRenderMode()
     .AddAdditionalAssemblies(typeof(NonnaSusy.Server.Client._Imports).Assembly);
+
+app.MapControllers();
 
 app.Run();
