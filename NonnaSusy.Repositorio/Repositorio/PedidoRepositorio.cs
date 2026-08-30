@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace NonnaSusy.Repositorio.Repositorio
 {
-    public class PedidoRepositorio
+    public class PedidoRepositorio : Repositorio<Pedido>, IPedidoRepositorio
     {
         private readonly Context context;
 
-        public PedidoRepositorio(Context context)
+        public PedidoRepositorio(Context context) : base(context)
         {
             this.context = context;
         }
@@ -19,7 +19,7 @@ namespace NonnaSusy.Repositorio.Repositorio
         public async Task<int> InsertarPedido(/*var PedidoDTO*/)
         {
             //Mock para que permita la compilacion
-            Pedido pedido = new Pedido(); 
+            Pedido pedido = new Pedido();
             //var pedido = new Pedido
             //{
             //    ClienteID = PedidoDTO.ClienteID,
@@ -37,7 +37,7 @@ namespace NonnaSusy.Repositorio.Repositorio
         }
 
         public async Task<List<Pedido>> SelectListaPedidos()
-        { 
+        {
             return await context.Pedidos
                 .Include(p => p.Cliente)
                 .Include(p => p.Renglones)
