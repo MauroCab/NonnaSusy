@@ -48,15 +48,24 @@ namespace NonnaSusy.Repositorio.Repositorio
             }
         }
 
-        public async Task<List<Pedido>> SelectListaPedidos()
+        public async Task<List<GetPedidoDTO>> SelectListaPedidos()
         {
             var pedidos = await context.Pedidos
-                .Include(p => p.Cliente)
-                .Include(p => p.Renglones)
-                    .ThenInclude(r => r.Producto)
-                .ToListAsync();
-                
-            return pedidos;
+                    .Include(p => p.Cliente)
+                    .Include(p => p.Renglones)
+                            .ThenInclude(r => r.Producto)
+                    .ToListAsync();
+
+            return pedidos.Select(p => new GetPedidoDTO
+            {
+                NombreCliente = p.Cliente.NombreCliente,
+                FechaPedido = p.FechaPedido,
+                RenglonesDTO = p.Renglones.Select(r => new GetRenglonDTO
+                {
+                    Cantidad = r.Cantidad,
+                    ProductoNombre = r.Producto.NombreProducto // Aquí se obtiene el nombre del producto
+                }).ToList()
+            }).ToList();
 
 
         }
