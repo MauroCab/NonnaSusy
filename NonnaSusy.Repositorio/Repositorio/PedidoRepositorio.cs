@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
+using NonnaSusy.Shared.DTO;
 
 namespace NonnaSusy.Repositorio.Repositorio
 {
@@ -16,33 +17,48 @@ namespace NonnaSusy.Repositorio.Repositorio
             this.context = context;
         }
 
-        public async Task<int> InsertarPedido(/*var PedidoDTO*/)
+        public async Task<int> InsertarPedido(Pedido pedido, List<Renglon> renglones)
         {
-            //Mock para que permita la compilacion
-            Pedido pedido = new Pedido();
-            //var pedido = new Pedido
-            //{
-            //    ClienteID = PedidoDTO.ClienteID,
-            //    FechaPedido = DateOnly.FromDateTime(DateTime.Now.Date + TimeSpan.FromDays(1)),
-            //    Renglones = PedidoDTO.Renglones.Select(r => new RenglonDTO
-            //    {
-            //        ProductoID = r.ProductoID,
-            //        Cantidad = r.Cantidad
-            //    }).ToList()
+            using (var transaction = await context.Database.BeginTransactionAsync())
+            {
+                try
+                {
+                    context.Pedidos.Add(pedido);
 
+                    await context.SaveChangesAsync();
 
-            //};
-            await context.Pedidos.AddAsync(pedido);
-            return await context.SaveChangesAsync();
+                    foreach (var renglon in renglones)
+                    {
+                        renglon.PedidoID = pedido.ID;
+                        context.Renglones.Add(renglon);
+                    }
+
+                    await context.SaveChangesAsync();
+
+                    await transaction.CommitAsync();
+
+                    return pedido.ID;
+
+                }
+                catch
+                {
+                    await transaction.RollbackAsync();
+                    throw;
+                }
+            }
         }
 
         public async Task<List<Pedido>> SelectListaPedidos()
         {
-            return await context.Pedidos
+            var pedidos = await context.Pedidos
                 .Include(p => p.Cliente)
                 .Include(p => p.Renglones)
-                    .ThenInclude(r => r.Producto.NombreProducto)
+                    .ThenInclude(r => r.Producto)
                 .ToListAsync();
+                
+            return pedidos;
+
+
         }
     }
 }
