@@ -32,6 +32,14 @@ namespace NonnaSusy.Server.Controllers
             return Ok(lista);
         }
 
+        [HttpGet("$productos-vendidos-hoy-{fecha}")]
+        public async Task<ActionResult<List<ProductoPedidoDTO>>> GetProductosPedidos(DateOnly fecha)
+        {
+            var resultado = await repositorio.SelectTotalesProductosPedidos(fecha);
+
+            return Ok(resultado);
+        }
+
         [HttpPost]
         public async Task<ActionResult<int>> Post(CrearPedidoDTO pedidoDTO)
         {

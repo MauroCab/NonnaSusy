@@ -7,5 +7,6 @@ namespace NonnaSusy.Repositorio.Repositorio
     {
         Task<int> InsertarPedido(Pedido pedido, List<Renglon> renglones);
         Task<List<GetPedidoDTO>> SelectListaPedidos();
+        Task<List<ProductoPedidoDTO>> SelectTotalesProductosPedidos(DateOnly fecha);
     }
 }

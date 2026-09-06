@@ -69,5 +69,24 @@ namespace NonnaSusy.Repositorio.Repositorio
 
 
         }
+
+        public async Task<List<ProductoPedidoDTO>> SelectTotalesProductosPedidos(DateOnly fecha)
+        {
+            var resultado = await context.Renglones
+                .Where(r => r.Pedido.FechaPedido == fecha)
+                .GroupBy(r => new
+                {
+                    r.ProductoID,
+                    r.Producto.NombreProducto
+                })
+                .Select(g => new ProductoPedidoDTO
+                {
+                    ProductoNombre = g.Key.NombreProducto,
+                    CantidadTotal = g.Sum(r => r.Cantidad)
+                })
+                .ToListAsync();
+
+            return resultado;
+        }
     }
 }
