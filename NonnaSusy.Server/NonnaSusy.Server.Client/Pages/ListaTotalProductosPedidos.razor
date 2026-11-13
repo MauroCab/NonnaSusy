@@ -1,0 +1,121 @@
+﻿@page "/ListaTotalProductosPedidos"
+@rendermode InteractiveAuto
+<section class="page-productos-totales">
+    <div class="page-content">
+      <main class="main-content">
+        <div class="content-layout">
+          <section class="page-heading">
+            <div class="heading-copy">
+              <h1>Productos Pedidos Totales</h1>
+              <p>
+                Listado general consolidado de unidades pedidas por cada
+                producto.
+              </p>
+            </div>
+          </section>
+          <section class="orders-card" aria-label="Listado de productos pedidos">
+            <div class="table-toolbar">
+              <div class="product-count">
+                <span>Total de productos pedidas:</span
+                ><span class="product-count-value">6</span>
+              </div>
+            </div>
+            <div class="table-scroll">
+              <table class="orders-table">
+                <thead>
+                  <tr>
+                    <th class="product-column">Producto</th>
+                    <th>Unidades Totales Pedidas</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>
+                      <div class="product-name">Caja Componentes X-100</div>
+                      <span class="product-description"
+                        >Pack 50 piezas estándar</span
+                      >
+                    </td>
+                    <td class="quantity-cell">
+                      <span class="total-quantity">450</span
+                      ><span class="unit-label">uds</span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div class="product-name">Módulo de Conexión Pro</div>
+                      <span class="product-description"
+                        >Serie industrial v2.4</span
+                      >
+                    </td>
+                    <td class="quantity-cell">
+                      <span class="total-quantity">5</span
+                      ><span class="unit-label">uds</span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div class="product-name">
+                        Bobina Embalaje Kraft Reforzado
+                      </div>
+                      <span class="product-description">50m x 80cm 120g</span>
+                    </td>
+                    <td class="quantity-cell">
+                      <span class="total-quantity">6</span
+                      ><span class="unit-label">uds</span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div class="product-name">
+                        Kit de Sensores Térmicos ST-4
+                      </div>
+                      <span class="product-description"
+                        >Calibración ultra precisa</span
+                      >
+                    </td>
+                    <td class="quantity-cell">
+                      <span class="total-quantity">320</span
+                      ><span class="unit-label">uds</span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div class="product-name">
+                        Lubricante Sintético Industrial
+                      </div>
+                      <span class="product-description"
+                        >Bidón 5 Litros Grado A</span
+                      >
+                    </td>
+                    <td class="quantity-cell">
+                      <span class="total-quantity">185</span
+                      ><span class="unit-label">uds</span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div class="product-name">
+                        Sellos de Seguridad Inviolables
+                      </div>
+                      <span class="product-description"
+                        >Tira numerada láser</span
+                      >
+                    </td>
+                    <td class="quantity-cell">
+                      <span class="total-quantity">514</span
+                      ><span class="unit-label">uds</span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+        </div>
+      </main>
+    </div>
+  </section>
+
+@code {
+
+}

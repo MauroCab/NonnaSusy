@@ -1,7 +1,7 @@
 <Solution>
   <Project Path="NonnaSusy.DB/NonnaSusy.DB.csproj" Id="91d8cd2f-c293-492b-85e3-04a889e77920" />
   <Project Path="NonnaSusy.Repositorio/NonnaSusy.Repositorio.csproj" Id="250fc9ef-fad6-4ff7-a491-25afd1bca615" />
-  <Project Path="NonnaSusy.Server/NonnaSusy.Server.Client/NonnaSusy.Server.Client.csproj" Id="cb94a283-a346-47c3-a147-95740c753f12" />
-  <Project Path="NonnaSusy.Server/NonnaSusy.Server/NonnaSusy.Server.csproj" Id="bed52f76-557c-4242-a22d-b8461de33d0d" />
+  <Project Path="NonnaSusy.Server/NonnaSusy.Server.Client/NonnaSusy.Server.Client.csproj" Id="668e6c36-02ee-44f0-ab3c-180454f0993c" />
+  <Project Path="NonnaSusy.Server/NonnaSusy.Server/NonnaSusy.Server.csproj" Id="f6b996da-0e31-46fc-8d56-b117d4736e71" />
   <Project Path="NonnaSusy.Shared/NonnaSusy.Shared.csproj" Id="20cf0ccc-91bd-49c6-b49c-8f787f8962eb" />
 </Solution>

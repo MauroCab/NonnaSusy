@@ -1,0 +1,119 @@
+﻿@page "/AgregarPedidos"
+@rendermode InteractiveAuto
+
+<section class="page-nuevo-pedido">
+    <div class="page-content">
+        <main class="main-content">
+            <div class="content-layout">
+                <div class="page-heading">
+                    <div>
+                        <h1>Nuevo Pedido</h1>
+                        <p>Complete los detalles para registrar un nuevo pedido en el sistema.</p>
+                    </div>
+                </div>
+
+                <div class="order-grid">
+                    <div class="main-column">
+                        <!-- Información del cliente -->
+                        <section class="content-card">
+                            <div class="section-heading">
+                                <div class="section-icon customer-icon">
+                                    <span class="material-symbols-outlined">person_search</span>
+                                </div>
+                                <h2>Seleccionar Cliente</h2>
+                            </div>
+
+                            
+
+                            <select id="customer-select" class="customer-select">
+                                <option disabled selected value="">Busque o seleccione un cliente...</option>
+                                <option value="1">Juan Pérez - Cliente Individual</option>
+                                <option value="2">Empresa Tech Solutions S.A.</option>
+                                <option value="3">María García - Consultora Independiente</option>
+                                <option value="4">Logística Global Ltda.</option>
+                            </select>
+                            <span class="material-symbols-outlined select-icon">arrow_drop_down</span>
+                            
+                            <div class="divider"></div>
+
+                            <div class="products-section">
+                                <div class="section-heading products-heading">
+                                    <div class="section-icon products-icon">
+                                        <span class="material-symbols-outlined">inventory_2</span>
+                                    </div>
+                                    <h2>Líneas de Pedido</h2>
+                                </div>
+
+                                <div class="product-lines" id="product-lines-container">
+                                    <div class="product-line">
+                                        <div class="product-field">
+                                            <label class="field-label">Producto</label>
+                                            <div class="select-wrapper">
+                                                <select class="product-select">
+                                                    <option disabled selected value="">Seleccionar producto</option>
+                                                    <option value="prod_a">Producto A - Licencia Anual</option>
+                                                    <option value="prod_b">Producto B - Soporte Premium (Mes)</option>
+                                                    <option value="prod_c">Producto C - Hardware Router X1</option>
+                                                </select>
+                                                <span class="material-symbols-outlined select-icon product-select-icon">expand_more</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="quantity-field">
+                                            <label class="field-label">Cantidad</label>
+                                            <input type="number" min="1" value="1" aria-label="Cantidad">
+                                        </div>
+
+                                        <div class="delete-area">
+                                            <button class="delete-button" title="Eliminar línea" type="button" aria-label="Eliminar línea">
+                                                <span class="material-symbols-outlined">delete</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="add-product-area">
+                                    <button class="add-product-button" id="add-product-btn" type="button">
+                                        <span class="material-symbols-outlined add-icon">add</span>
+                                        <span>Añadir otra línea</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+
+                    <!-- Resumen -->
+                    <aside class="summary-column">
+                        <section class="summary-card">
+                            <h2>Resumen</h2>
+
+                            <div class="summary-details">
+                                <div class="summary-row">
+                                    <span>Subtotal estimado</span>
+                                    <strong>--</strong>
+                                </div>
+                                <div class="summary-row">
+                                    <span>Impuestos (Calculados post-guardado)</span>
+                                    <span>--</span>
+                                </div>
+
+                                <div class="divider"></div>
+
+                                
+                            </div>
+
+                            <button class="save-button" type="button">
+                                <span class="material-symbols-outlined">save</span>
+                                <span>Guardar Pedido</span>
+                            </button>
+                        </section>
+                    </aside>
+                </div>
+            </div>
+        </main>
+    </div>
+</section>
+
+@code {
+
+}
