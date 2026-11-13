@@ -3,5 +3,6 @@
   <Project Path="NonnaSusy.Repositorio/NonnaSusy.Repositorio.csproj" Id="250fc9ef-fad6-4ff7-a491-25afd1bca615" />
   <Project Path="NonnaSusy.Server/NonnaSusy.Server.Client/NonnaSusy.Server.Client.csproj" Id="668e6c36-02ee-44f0-ab3c-180454f0993c" />
   <Project Path="NonnaSusy.Server/NonnaSusy.Server/NonnaSusy.Server.csproj" Id="f6b996da-0e31-46fc-8d56-b117d4736e71" />
+  <Project Path="NonnaSusy.Services/NonnaSusy.Services.csproj" Id="9fbe3660-0158-41e8-8cf1-6175c1183d94" />
   <Project Path="NonnaSusy.Shared/NonnaSusy.Shared.csproj" Id="20cf0ccc-91bd-49c6-b49c-8f787f8962eb" />
 </Solution>

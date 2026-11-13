@@ -1,6 +1,11 @@
 ﻿@page "/AgregarPedidos"
 @rendermode InteractiveAuto
 
+@using NonnaSusy.DB.Data.Entities
+@using NonnaSusy.Services.HttpServices
+@using System.Net.Http.Json
+
+@inject IHttpServicio Http
 <section class="page-nuevo-pedido">
     <div class="page-content">
         <main class="main-content">
@@ -25,12 +30,13 @@
 
                             
 
-                            <select id="customer-select" class="customer-select">
-                                <option disabled selected value="">Busque o seleccione un cliente...</option>
-                                <option value="1">Juan Pérez - Cliente Individual</option>
-                                <option value="2">Empresa Tech Solutions S.A.</option>
-                                <option value="3">María García - Consultora Independiente</option>
-                                <option value="4">Logística Global Ltda.</option>
+                            <select id="customer-select" class="customer-select" @bind="ClienteSeleccionadoID">
+                                <option value="0">Busque o seleccione un cliente...</option>
+
+                                @foreach (var cliente in Clientes)
+                                {
+                                    <option value="@cliente.ID">@cliente.NombreCliente</option>
+                                }
                             </select>
                             <span class="material-symbols-outlined select-icon">arrow_drop_down</span>
                             
@@ -49,11 +55,13 @@
                                         <div class="product-field">
                                             <label class="field-label">Producto</label>
                                             <div class="select-wrapper">
-                                                <select class="product-select">
-                                                    <option disabled selected value="">Seleccionar producto</option>
-                                                    <option value="prod_a">Producto A - Licencia Anual</option>
-                                                    <option value="prod_b">Producto B - Soporte Premium (Mes)</option>
-                                                    <option value="prod_c">Producto C - Hardware Router X1</option>
+                                                <select class="product-select" @bind="ProductoSeleccionadoID">
+                                                    <option value="0">Seleccionar producto</option>
+
+                                                    @foreach (var producto in Productos)
+                                                    {
+                                                        <option value="@producto.ID">@producto.NombreProducto</option>
+                                                    }
                                                 </select>
                                                 <span class="material-symbols-outlined select-icon product-select-icon">expand_more</span>
                                             </div>
@@ -115,5 +123,18 @@
 </section>
 
 @code {
+    @code {
+    private List<Cliente> Clientes = new();
+    private List<Producto> Productos = new();
 
+    private int ClienteSeleccionadoID;
+    private int ProductoSeleccionadoID;
+
+    protected override async Task OnInitializedAsync()
+    {
+        Clientes = await Http.Get<List<Cliente>>("api/Clientes/ListaClientes");
+
+        Productos = await Http.Get<List<Producto>>("api/Productos/ListaProductos");
+    }
+}
 }
