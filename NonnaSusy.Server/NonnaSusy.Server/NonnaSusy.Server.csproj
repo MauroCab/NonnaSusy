@@ -18,7 +18,7 @@
     <ProjectReference Include="..\..\NonnaSusy.DB\NonnaSusy.DB.csproj" />
     <ProjectReference Include="..\..\NonnaSusy.Repositorio\NonnaSusy.Repositorio.csproj" />
     <ProjectReference Include="..\NonnaSusy.Server.Client\NonnaSusy.Server.Client.csproj" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="10.0.9" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="10.0.15" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.11">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
