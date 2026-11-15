@@ -5,7 +5,8 @@
 @using NonnaSusy.Services.HttpServices
 @using System.Net.Http.Json
 
-@inject IHttpServicio Http
+@inject IHttpServicio http
+
 <section class="page-nuevo-pedido">
     <div class="page-content">
         <main class="main-content">
@@ -38,6 +39,7 @@
                                     <option value="@cliente.ID">@cliente.NombreCliente</option>
                                 }
                             </select>
+
                             <span class="material-symbols-outlined select-icon">arrow_drop_down</span>
                             
                             <div class="divider"></div>
@@ -123,7 +125,7 @@
 </section>
 
 @code {
-    @code {
+       
     private List<Cliente> Clientes = new();
     private List<Producto> Productos = new();
 
@@ -132,9 +134,29 @@
 
     protected override async Task OnInitializedAsync()
     {
-        Clientes = await Http.Get<List<Cliente>>("api/Clientes/ListaClientes");
+        await base.OnInitializedAsync();
+        await LeerDatos();
+            
 
-        Productos = await Http.Get<List<Producto>>("api/Productos/ListaProductos");
+        
     }
-}
+    private async Task LeerDatos()
+    {
+        var clientes = await http.Get<List<Cliente>>("api/Clientes/ListaClientes");
+
+        var productos = await http.Get<List<Producto>>("api/Productos/ListaProductos");
+
+        Clientes = clientes.Respuesta.Select(c => new Cliente
+        {
+            ID = c.ID,
+            NombreCliente = c.NombreCliente
+        }).ToList();
+
+        Productos = productos.Respuesta.Select(p => new Producto
+        {
+            ID = p.ID,
+            NombreProducto = p.NombreProducto
+
+        }).ToList();
+    }
 }

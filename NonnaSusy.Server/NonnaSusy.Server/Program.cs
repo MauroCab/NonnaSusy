@@ -1,8 +1,10 @@
+using Microsoft.AspNetCore.Components;
 using Microsoft.EntityFrameworkCore;
 using NonnaSusy.DB.Data;
 using NonnaSusy.DB.Data.Entities;
 using NonnaSusy.Repositorio.Repositorio;
 using NonnaSusy.Server.Components;
+using NonnaSusy.Services.HttpServices;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,9 +22,20 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 builder.Services.AddDbContext<Context>(options =>
     options.UseSqlServer(connectionString));
 
+builder.Services.AddScoped(sp =>
+{
+    var navigationManager = sp.GetRequiredService<NavigationManager>();
+
+    return new HttpClient
+    {
+        BaseAddress = new Uri(navigationManager.BaseUri)
+    };
+});
+
 builder.Services.AddScoped<IRepositorio<Cliente>, Repositorio<Cliente>>();
 builder.Services.AddScoped<IRepositorio<Producto>, Repositorio<Producto>>();
 builder.Services.AddScoped<IPedidoRepositorio, PedidoRepositorio>();
+builder.Services.AddScoped<IHttpServicio, HttpServicio>();
 
 var app = builder.Build();
 
