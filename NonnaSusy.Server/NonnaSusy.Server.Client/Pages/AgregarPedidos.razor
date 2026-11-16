@@ -1,9 +1,10 @@
 ﻿@page "/AgregarPedidos"
 @rendermode InteractiveAuto
 
+@using System.Net.Http.Json
 @using NonnaSusy.DB.Data.Entities
 @using NonnaSusy.Services.HttpServices
-@using System.Net.Http.Json
+@using NonnaSusy.Shared.DTO
 
 @inject IHttpServicio http
 
@@ -53,9 +54,11 @@
                                 </div>
 
                                 <div class="product-lines" id="product-lines-container">
+                                    <!-- Miniformulario fijo para agregar productos -->
                                     <div class="product-line">
                                         <div class="product-field">
                                             <label class="field-label">Producto</label>
+
                                             <div class="select-wrapper">
                                                 <select class="product-select" @bind="ProductoSeleccionadoID">
                                                     <option value="0">Seleccionar producto</option>
@@ -65,29 +68,67 @@
                                                         <option value="@producto.ID">@producto.NombreProducto</option>
                                                     }
                                                 </select>
-                                                <span class="material-symbols-outlined select-icon product-select-icon">expand_more</span>
+
+                                                <span class="material-symbols-outlined select-icon product-select-icon">
+                                                    expand_more
+                                                </span>
                                             </div>
                                         </div>
 
                                         <div class="quantity-field">
                                             <label class="field-label">Cantidad</label>
-                                            <input type="number" min="1" value="1" aria-label="Cantidad">
-                                        </div>
 
-                                        <div class="delete-area">
-                                            <button class="delete-button" title="Eliminar línea" type="button" aria-label="Eliminar línea">
-                                                <span class="material-symbols-outlined">delete</span>
-                                            </button>
+                                            <input type="number"
+                                                   min="1"
+                                                   @bind="CantidadSeleccionada"
+                                                   aria-label="Cantidad" />
                                         </div>
+                                    </div>
+
+                                    <!-- Lista de productos agregados -->
+                                    <div id="product-lines-container">
+
+                                        @foreach (var renglon in RenglonesTemporales)
+                                        {
+                                            var producto = Productos.FirstOrDefault(p => p.ID == renglon.ProductoID);
+
+                                            <div class="product-line">
+                                                <div class="product-field">
+                                                    <label class="field-label">Producto</label>
+                                                    <span>@producto?.NombreProducto</span>
+                                                </div>
+
+                                                <div class="quantity-field">
+                                                    <label class="field-label">Cantidad</label>
+                                                    <span>@renglon.Cantidad</span>
+                                                </div>
+
+                                                <div class="delete-area">
+                                                    <button class="delete-button"
+                                                            title="Eliminar línea"
+                                                            type="button"
+                                                            @onclick="() => EliminarProducto(renglon)">
+                                                        <span class="material-symbols-outlined">delete</span>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        }
+
                                     </div>
                                 </div>
 
                                 <div class="add-product-area">
-                                    <button class="add-product-button" id="add-product-btn" type="button">
+                                    <button class="add-product-button"
+                                            id="add-product-btn"
+                                            type="button"
+                                            @onclick="AgregarProducto">
+
                                         <span class="material-symbols-outlined add-icon">add</span>
                                         <span>Añadir otra línea</span>
                                     </button>
                                 </div>
+
+                                
                             </div>
                         </section>
                     </div>
@@ -97,25 +138,27 @@
                         <section class="summary-card">
                             <h2>Resumen</h2>
 
-                            <div class="summary-details">
-                                <div class="summary-row">
-                                    <span>Subtotal estimado</span>
-                                    <strong>--</strong>
-                                </div>
-                                <div class="summary-row">
-                                    <span>Impuestos (Calculados post-guardado)</span>
-                                    <span>--</span>
-                                </div>
+                            @* <div class="summary-details">
 
-                                <div class="divider"></div>
+                                    <div class="summary-row">
+                                        <span>Subtotal estimado</span>
+                                        <strong>--</strong>
+                                    </div>
+                                    <div class="summary-row">
+                                        <span>Impuestos (Calculados post-guardado)</span>
+                                        <span>--</span>
+                                    </div>
+
+                                    <div class="divider"></div>
 
                                 
-                            </div>
+                                </div> *@
 
                             <button class="save-button" type="button">
                                 <span class="material-symbols-outlined">save</span>
                                 <span>Guardar Pedido</span>
                             </button>
+
                         </section>
                     </aside>
                 </div>
@@ -125,20 +168,20 @@
 </section>
 
 @code {
-       
+      
     private List<Cliente> Clientes = new();
     private List<Producto> Productos = new();
 
     private int ClienteSeleccionadoID;
     private int ProductoSeleccionadoID;
 
+    private int CantidadSeleccionada = 1;
+    private List<CrearRenglonDTO> RenglonesTemporales = new();
+
     protected override async Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
         await LeerDatos();
-            
-
-        
     }
     private async Task LeerDatos()
     {
@@ -159,4 +202,27 @@
 
         }).ToList();
     }
+
+    private void AgregarProducto()
+    {
+        if (ProductoSeleccionadoID == 0 || CantidadSeleccionada < 1)
+            return;
+
+        RenglonesTemporales.Add(new CrearRenglonDTO
+        {
+            ProductoID = ProductoSeleccionadoID,
+            Cantidad = CantidadSeleccionada
+        });
+
+        // Reiniciar el miniformulario
+        ProductoSeleccionadoID = 0;
+        CantidadSeleccionada = 1;
+    }
+
+    private void EliminarProducto(CrearRenglonDTO renglon)
+    {
+        RenglonesTemporales.Remove(renglon);
+    }
+
+        
 }

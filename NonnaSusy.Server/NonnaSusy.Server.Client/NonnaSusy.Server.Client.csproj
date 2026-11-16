@@ -16,6 +16,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\NonnaSusy.DB\NonnaSusy.DB.csproj" />
     <ProjectReference Include="..\..\NonnaSusy.Services\NonnaSusy.Services.csproj" />
+    <ProjectReference Include="..\..\NonnaSusy.Shared\NonnaSusy.Shared.csproj" />
   </ItemGroup>
 
 </Project>
