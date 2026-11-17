@@ -136,25 +136,9 @@
                     <!-- Resumen -->
                     <aside class="summary-column">
                         <section class="summary-card">
-                            <h2>Resumen</h2>
+                            
 
-                            @* <div class="summary-details">
-
-                                    <div class="summary-row">
-                                        <span>Subtotal estimado</span>
-                                        <strong>--</strong>
-                                    </div>
-                                    <div class="summary-row">
-                                        <span>Impuestos (Calculados post-guardado)</span>
-                                        <span>--</span>
-                                    </div>
-
-                                    <div class="divider"></div>
-
-                                
-                                </div> *@
-
-                            <button class="save-button" type="button">
+                            <button class="save-button" type="button" @onclick="GuardarPedido">
                                 <span class="material-symbols-outlined">save</span>
                                 <span>Guardar Pedido</span>
                             </button>
@@ -224,5 +208,20 @@
         RenglonesTemporales.Remove(renglon);
     }
 
-        
+    private async Task GuardarPedido()
+    {
+        if (ClienteSeleccionadoID == 0)
+            return;
+
+        if (RenglonesTemporales.Count == 0)
+            return;
+
+        var pedido = new CrearPedidoDTO
+        {
+            ClienteID = ClienteSeleccionadoID,
+            RenglonesDTO = RenglonesTemporales.ToList()
+        };
+
+        var response = await http.Post<CrearPedidoDTO>("api/Pedidos", pedido);
+    }
 }
