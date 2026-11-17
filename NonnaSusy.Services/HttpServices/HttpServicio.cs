@@ -28,6 +28,21 @@ namespace NonnaSusy.Services.HttpServices
             }
         }
 
+        public async Task<HttpRespuesta<T>> GetTotalProductosPedidos<T>(DateTime fecha)
+        {
+            var stringFecha = fecha.ToString("yyyy-MM-dd");
+            var response = await http.GetAsync($"api/Pedidos/$productos-pedidos-{fecha}");
+            if (response.IsSuccessStatusCode)
+            {
+                var respuesta = await DesSerializar<T>(response);
+                return new HttpRespuesta<T>(respuesta, false, response);
+            }
+            else
+            {
+                return new HttpRespuesta<T>(default, true, response);
+            }
+        }
+
         public async Task<HttpRespuesta<object>> Post<T>(string url, T entidad)
         {
             var JsonAEnviar = JsonSerializer.Serialize(entidad);
